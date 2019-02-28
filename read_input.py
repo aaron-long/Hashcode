@@ -14,3 +14,14 @@ def read_input(filename):
             pics[i]= Photo(orientation, i, tags)
             i += 1
     return pics
+
+def write_output(filename, photos):
+
+    terminator = '\n'
+    with open(filename, 'w') as f:
+        size = len(photos)
+        f.write(str(size) + terminator)
+
+        for photo in photos:
+            f.write(str(photo.num) + terminator)
+
