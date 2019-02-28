@@ -63,4 +63,4 @@ def do_greedy(slides,num = 100):
         out+=[slides[i]]
     return out
 
-    
+
