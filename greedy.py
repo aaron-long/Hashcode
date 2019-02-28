@@ -20,10 +20,10 @@ def calc_score(slide1, slide2):
         else:
             distinct2+=1
             j+=1
-        if i > len(tags1):
+        if i >= len(tags1):
             done = True
             distinct2 += len(tags2)-j
-        if j > len(tags2):
+        if j >= len(tags2):
             done = True
             distinct1 += len(tags1)-i
         
@@ -35,23 +35,24 @@ def take_best(start, slides):
     best_score = 0
     index = 0
     crap_slides = []
-    for tmp in slides:
+    for j,tmp in enumerate(slides[:]):
         i = tmp[0]
         s = tmp[1]
         score = calc_score(start,s)
         if score>best_score:
             crap_slides+=[slides[index]]
             best_score = score
-            index = i
+            index = j
 
         else:
-            crap_slides +=[i]
-    return index,crap_slides
+            crap_slides +=[(i,s)]
+    #print(slides[index][0])
+    return slides[index][0],crap_slides
 
 def do_greedy(slides):
     to_process = list(enumerate(slides))
-    order = [slides[0]]
-    while(to_process != [])
+    order = [0]
+    while(len(to_process) > 1):
         i,s = take_best(to_process[0][1],to_process[1:])
         order+=[i]
         to_process = s
