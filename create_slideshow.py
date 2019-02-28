@@ -22,7 +22,7 @@ class Slide:
             self.tags = list(photo1.tags)
         else:
             self.num = [photo1.num, photo2.num]
-            self.tags = list(set(photo1.tags + photo2.tags))
+            self.tags = sorted(list(set(photo1.tags + photo2.tags)))
 
 
 def sort_photos(photos):
