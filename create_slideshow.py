@@ -17,7 +17,7 @@ class Slide:
 
     """
     def __init__(self, photo1=Photo(), photo2=None):
-        if photo2 == None:
+        if photo2 is None:
             self.num = [photo1.num]
             self.tags = list(photo1.tags)
         else:
