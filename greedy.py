@@ -1,8 +1,8 @@
 from create_slideshow import *
 
-def calc_score(photo1, photo2):
-    tags1 = sorted(photo1.tags)
-    tags2 = sorted(photo2.tags)
+def calc_score(slide1, slide2):
+    tags1 = sorted(slide1.tags)
+    tags2 = sorted(slide2.tags)
     i =0
     j = 0
     matching = 0
@@ -29,7 +29,36 @@ def calc_score(photo1, photo2):
         
             
         
-    return matching+distinct1+distinct2
+    return min([matching,distinct1,distinct2])
 
-def take_best(start, vals):
-    return None
+def take_best(start, slides):
+    best_score = 0
+    index = 0
+    crap_slides = []
+    for tmp in slides:
+        i = tmp[0]
+        s = tmp[1]
+        score = calc_score(start,s)
+        if score>best_score:
+            crap_slides+=[slides[index]]
+            best_score = score
+            index = i
+
+        else:
+            crap_slides +=[i]
+    return index,crap_slides
+
+def do_greedy(slides):
+    to_process = list(enumerate(slides))
+    order = [slides[0]]
+    while(to_process != [])
+        i,s = take_best(to_process[0][1],to_process[1:])
+        order+=[i]
+        to_process = s
+
+    out = []
+    for i in order:
+        out+=[slides[i]]
+    return out
+
+    
