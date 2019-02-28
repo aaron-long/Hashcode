@@ -35,7 +35,7 @@ def take_best(start, slides):
     best_score = 0
     index = 0
     crap_slides = []
-    for j,tmp in enumerate(slides[:]):
+    for j,tmp in enumerate(slides[:1000]):
         i = tmp[0]
         s = tmp[1]
         score = calc_score(start,s)
