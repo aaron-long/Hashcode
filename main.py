@@ -5,6 +5,7 @@ from greedy import do_greedy
 files = ['a_example.txt', 'b_lovely_landscapes.txt', 'c_memorable_moments.txt',
          'd_pet_pictures.txt', 'e_shiny_selfies.txt']
 
+
 def main():
 
     for file in files:
