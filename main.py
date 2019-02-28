@@ -1,7 +1,7 @@
-from read_input import read_input, write_output
+from file_handler import read_input, write_output
 
 
-filename = 'test_file.txt'
+filename = 'slideshow.txt'
 
 
 def main():
