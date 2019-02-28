@@ -24,5 +24,8 @@ def write_output(filename, slides):
         f.write(str(size) + terminator)
 
         for slide in slides:
-            f.write(str(slide.num) + str(slide.tags) + terminator)
+            num_str = ''
+            for i in slide.num:
+                num_str += str(i)+' '
+            f.write(num_str + terminator)
 
