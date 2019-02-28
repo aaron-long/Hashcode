@@ -12,10 +12,10 @@ def main():
     print('Pics object:', pics)
 
     # Sort photos
-    sort_photos(pics)
+    slides = sort_photos(pics)
 
     # Write the slideshow to file
-    write_output(filename, pics)
+    write_output(filename, slides)
 
 
 if __name__ == '__main__':

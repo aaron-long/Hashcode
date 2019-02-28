@@ -16,13 +16,13 @@ def read_input(filename):
     return pics
 
 
-def write_output(filename, photos):
+def write_output(filename, slides):
 
     terminator = '\n'
     with open(filename, 'w') as f:
-        size = len(photos)
+        size = len(slides)
         f.write(str(size) + terminator)
 
-        for photo in photos:
-            f.write(str(photo.num) + terminator)
+        for slide in slides:
+            f.write(str(slide.num) + str(slide.tags) + terminator)
 
