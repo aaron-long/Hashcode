@@ -1,6 +1,12 @@
 from create_slideshow import Photo
 
 
+def read_params(filename='params.txt'):
+    with open(filename, 'r') as f:
+        greed = f.readline()
+    return greed
+
+
 def read_input(filename):
 
     with open(filename, 'r') as f:
