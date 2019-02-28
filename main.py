@@ -1,8 +1,8 @@
 from read_input import read_input, write_output
-from create_slideshow import Photo
 
 
 filename = 'test_file.txt'
+
 
 def main():
     # Create the slideshow
