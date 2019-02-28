@@ -8,4 +8,4 @@ class Photo:
         self.tags = tags
 
     def __repr__(self):
-        return "Photo ({}): {}".format(self.orientation,self.tags) 
+        return "Photo ({}): {}".format(self.orientation, self.tags)
