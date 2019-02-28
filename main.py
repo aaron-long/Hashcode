@@ -1,6 +1,8 @@
-from read_input import read_input
+from read_input import read_input, write_output
 from create_slideshow import Photo
 
+
+filename = 'test_file.txt'
 
 def main():
     # Create the slideshow
@@ -8,6 +10,8 @@ def main():
 
     # Print the pics object
     print('Pics object:', pics)
+
+    write_output(filename, pics)
 
 
 if __name__ == '__main__':

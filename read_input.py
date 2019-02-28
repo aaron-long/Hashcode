@@ -11,9 +11,10 @@ def read_input(filename):
             tokens = line.split()
             orientation = tokens[0]
             tags = tokens[2:]
-            pics[i]= Photo(orientation, i, tags)
+            pics[i] = Photo(orientation, i, tags)
             i += 1
     return pics
+
 
 def write_output(filename, photos):
 
