@@ -15,7 +15,7 @@ def main():
         # Sort photos
         slides = sort_photos(pics)
 
-        #slides = do_greedy(slides)
+        slides = do_greedy(slides)
 
         # Write the slideshow to file
         write_output(file, slides)
