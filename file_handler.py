@@ -3,7 +3,7 @@ from create_slideshow import Photo
 
 def read_input(filename):
 
-    with open(filename,'r') as f:
+    with open(filename, 'r') as f:
         size = int(f.readline())
         pics = [Photo()]*size
         i = 0
@@ -19,7 +19,7 @@ def read_input(filename):
 def write_output(filename, slides):
 
     terminator = '\n'
-    with open(filename, 'w') as f:
+    with open('out_' + filename, 'w') as f:
         size = len(slides)
         f.write(str(size) + terminator)
 
