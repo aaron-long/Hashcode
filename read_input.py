@@ -1,5 +1,5 @@
-import numpy as np
 from create_slideshow import Photo
+
 
 def read_input(filename):
 
