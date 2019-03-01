@@ -3,8 +3,8 @@ import numpy as np
 from collections import deque
 
 def calc_score(slide1, slide2):
-    tags1 = sorted(slide1.tags)
-    tags2 = sorted(slide2.tags)
+    tags1 = slide1.tags
+    tags2 = slide2.tags
     i =0
     j = 0
     matching = 0
