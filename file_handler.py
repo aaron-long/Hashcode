@@ -7,18 +7,24 @@ def read_params(filename='params.txt'):
     return greed
 
 
-def read_input(filename):
+def read_input(filename,threshold =1):
 
     with open(filename, 'r') as f:
         size = int(f.readline())
+        print(size)
         pics = [Photo()]*size
         i = 0
+        idx = 0
         for line in f.readlines():
             tokens = line.split()
-            orientation = tokens[0]
-            tags = tokens[2:]
-            pics[i] = Photo(orientation, i, tags)
-            i += 1
+            if int(tokens[1])>threshold:
+                orientation = tokens[0]
+                tags = tokens[2:]
+                pics[i] = Photo(orientation, idx, tags)
+                i += 1
+            idx+=1
+        pics = pics[:i]
+        print(i)
     return pics
 
 
