@@ -9,13 +9,18 @@ output_path = 'output_files'
 files = sorted(glob.glob(input_path + '/*.txt'))
 problems = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
+# Control params
+ITERATIONS = 1000000
+CONVERGENCE_TRIG = 2
+PROBLEM_SET = 'e'
+
 
 def main():
     # Create the slideshow
-    photos = read_photo_collection(files[problems.get('e')])
+    photos = read_photo_collection(files[problems.get(PROBLEM_SET)])
 
     # Sort photos
-    slideshow = create_optimal_slideshow(photos, 1000000, 2)
+    slideshow = create_optimal_slideshow(photos, ITERATIONS, CONVERGENCE_TRIG)
 
     score = get_slides_score(slideshow)
     print('Final score = {0}'.format(score))
