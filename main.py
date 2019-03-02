@@ -12,10 +12,10 @@ problems = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
 def main():
     # Create the slideshow
-    photos = read_photo_collection(files[problems.get('b')])
+    photos = read_photo_collection(files[problems.get('e')])
 
     # Sort photos
-    slideshow = create_optimal_slideshow(photos, 4000)
+    slideshow = create_optimal_slideshow(photos, 1000000, 2)
 
     score = get_slides_score(slideshow)
     print('Final score = {0}'.format(score))
