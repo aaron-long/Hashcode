@@ -1,28 +1,27 @@
-from file_handler import read_input, write_output, read_params
-from create_slideshow import sort_photos
-from greedy import do_greedy
-from random import make_random
+import glob
 
-files = ['a_example.txt', 'b_lovely_landscapes.txt', 'c_memorable_moments.txt',
-         'd_pet_pictures.txt', 'e_shiny_selfies.txt']
+from utils.file_handler import get_photo_collection
+from utils.create_slideshow import create_optimal_slideshow
+from utils.scoring_functions import get_slides_score
 
-greed = read_params()
+input_path = 'input_files'
+output_path = 'output_files'
+files = sorted(glob.glob(input_path + '/*.txt'))
+problems = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
 
 def main():
+    # Create the slideshow
+    photos = get_photo_collection(files[problems.get('b')])
 
-    for file in files:
-        # Create the slideshow
-        pics = read_input(file)
+    # Sort photos
+    slideshow = create_optimal_slideshow(photos)
 
-        # Sort photos
-        slides = sort_photos(pics)
+    score = get_slides_score(slideshow)
+    print('Final score = {0}'.format(score))
 
-        #slides = do_greedy(slides, greed)
-        slides = make_random(slides)
-
-        # Write the slideshow to file
-        write_output(file, slides)
+    # Write the slideshow to file
+    # write_output(file, slides)
 
 
 if __name__ == '__main__':

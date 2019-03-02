@@ -1,6 +1,3 @@
-from create_slideshow import *
-import numpy as np
-
 def calc_score(slide1, slide2):
     tags1 = sorted(slide1.tags)
     tags2 = sorted(slide2.tags)
