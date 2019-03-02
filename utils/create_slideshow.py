@@ -2,30 +2,35 @@ import itertools
 import random
 
 from slide_objects import Slide
-from utils.scoring_functions import get_interest_factors
+from utils.scoring_functions import get_interest_factors, get_slides_score
 
 
-def create_optimal_slideshow(photos):
+def create_optimal_slideshow(photos, iter):
     """
     Sort a collection of photos to create an optimal slideshow.
 
     Args:
         photos (list[slide_objects.Photo]): List of photos to be sorted
+        iter (int): Search iterations
 
     Returns:
         slideshow (list[Slide]): A list of slides forming a slideshow
     """
     # Currently sparse but would like to allow for different algorithm selections
-    slideshow = combine_photos(photos)
+    slideshow = combine_photos(photos, iter)
 
     return slideshow
 
 
-def combine_photos(photos):
+def combine_photos(photos, max_iter=100):
     """
+    Brute force.
+
+    Priority on matching vertical combos against horizontal slides, and horizontal slides to vertical ones.
 
     Args:
         photos (list[Photo]): List of photo objects
+        max_iter (int): Maximum number of iterations for main loop
 
     Returns:
         slideshow (list[Slide]): List of slides
@@ -41,15 +46,14 @@ def combine_photos(photos):
     seed_photo = random.choice(h_photos)
     slideshow.append(Slide(seed_photo))
 
-    for _ in range(1000):
+    for _ in range(max_iter):
         if _ % 100 == 0:
-            print('At iter: {0}'.format(_))
+            print('Iteration, Score: {0}, {1}'.format(_, get_slides_score(slideshow)))
 
         find_next_slide(h_photos, slideshow, v_photos)
 
     print('V: {0}'.format(len(v_photos)))
     print('H: {0}'.format(len(h_photos)))
-    print('Slideshow: {0}'.format(slideshow))
 
     return slideshow
 
@@ -57,15 +61,16 @@ def combine_photos(photos):
 def find_next_slide(h_photos, slideshow, v_photos):
     current_slide = slideshow[-1]
     if current_slide.orientation == 'H':
-        # First try to match a V combination
+
         current_slide = match_v_combo(current_slide, slideshow, v_photos)
-        # If we exhausted all V combinations try an H match
         current_slide = match_h(current_slide, h_photos, slideshow)
+
     if current_slide.orientation == 'V':
-        # First try and match a H slide
+
         current_slide = match_h(current_slide, h_photos, slideshow)
-        # If we exhausted all H slides then try a V combo
         current_slide = match_v_combo(current_slide, slideshow, v_photos)
+
+    return
 
 
 def match_h(current_slide, h_photos, slideshow):
@@ -74,6 +79,11 @@ def match_h(current_slide, h_photos, slideshow):
         interest_factor = min(get_interest_factors(current_slide, trial_slide))
 
         if interest_factor == 1:
+            slideshow.append(trial_slide)
+            h_photos.remove(photo)
+            current_slide = slideshow[-1]
+            break
+        elif interest_factor > 1:
             slideshow.append(trial_slide)
             h_photos.remove(photo)
             current_slide = slideshow[-1]
@@ -87,6 +97,12 @@ def match_v_combo(current_slide, slideshow, v_photos):
         interest_factor = min(get_interest_factors(current_slide, trial_slide))
 
         if interest_factor == 1:
+            slideshow.append(trial_slide)
+            v_photos.remove(photo1)
+            v_photos.remove(photo2)
+            current_slide = slideshow[-1]
+            break
+        elif interest_factor > 1:
             slideshow.append(trial_slide)
             v_photos.remove(photo1)
             v_photos.remove(photo2)
@@ -107,10 +123,10 @@ def get_collection_type(v_photos, h_photos):
         collection_type (str): The string describing the collection type
 
     """
-    collection_type = 'unknown'
+    collection_type = None
 
     if len(v_photos) and len(h_photos) == 0:
-        exit('Warning failed to find any photos in collection')
+        exit('ERROR: failed to find any photos in collection')
     elif len(v_photos) != 0 and len(h_photos) == 0:
         collection_type = 'vertical'
     elif len(v_photos) == 0 and len(h_photos) != 0:

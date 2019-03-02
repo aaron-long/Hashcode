@@ -37,7 +37,7 @@ def write_slideshow(filename, slides):
     """
     terminator = '\n'
 
-    with open('out_' + filename, 'w') as f:
+    with open('output_files/out_' + filename, 'w') as f:
         size = len(slides)
         f.write(str(size) + terminator)
 
