@@ -28,7 +28,7 @@ def combine_photos(photos):
         photos (list[Photo]): List of photo objects
 
     Returns:
-
+        slideshow (list[Slide]): List of slides
     """
     slideshow = []
 
@@ -45,61 +45,54 @@ def combine_photos(photos):
         if _ % 100 == 0:
             print('At iter: {0}'.format(_))
 
-        current_slide = slideshow[-1]
-
-        if current_slide.orientation == 'H':
-            # First try to match a V combination
-            for photo1, photo2 in itertools.combinations(v_photos, 2):
-                trial_slide = Slide(photo1, photo2)
-                interest_factor = min(get_interest_factors(current_slide, trial_slide))
-
-                if interest_factor == 1:
-                    slideshow.append(trial_slide)
-                    v_photos.remove(photo1)
-                    v_photos.remove(photo2)
-                    current_slide = slideshow[-1]
-                    break
-
-            # If we exhausted all V combinations try an H match
-            for photo in h_photos:
-                trial_slide = Slide(photo)
-                interest_factor = min(get_interest_factors(current_slide, trial_slide))
-
-                if interest_factor == 1:
-                    slideshow.append(trial_slide)
-                    h_photos.remove(photo)
-                    current_slide = slideshow[-1]
-                    break
-
-        if current_slide.orientation == 'V':
-            # First try and match a H slide
-            for photo in h_photos:
-                trial_slide = Slide(photo)
-                interest_factor = min(get_interest_factors(current_slide, trial_slide))
-
-                if interest_factor == 1:
-                    slideshow.append(trial_slide)
-                    h_photos.remove(photo)
-                    current_slide = slideshow[-1]
-                    break
-
-            # If we exhausted all H slides then try a V combo
-            for photo1, photo2 in itertools.combinations(v_photos, 2):
-                trial_slide = Slide(photo1, photo2)
-                interest_factor = min(get_interest_factors(current_slide, trial_slide))
-
-                if interest_factor == 1:
-                    slideshow.append(trial_slide)
-                    v_photos.remove(photo1)
-                    v_photos.remove(photo2)
-                    current_slide = slideshow[-1]
-                    break
+        find_next_slide(h_photos, slideshow, v_photos)
 
     print('V: {0}'.format(len(v_photos)))
     print('H: {0}'.format(len(h_photos)))
     print('Slideshow: {0}'.format(slideshow))
 
     return slideshow
+
+
+def find_next_slide(h_photos, slideshow, v_photos):
+    current_slide = slideshow[-1]
+    if current_slide.orientation == 'H':
+        # First try to match a V combination
+        current_slide = match_v_combo(current_slide, slideshow, v_photos)
+        # If we exhausted all V combinations try an H match
+        current_slide = match_h(current_slide, h_photos, slideshow)
+    if current_slide.orientation == 'V':
+        # First try and match a H slide
+        current_slide = match_h(current_slide, h_photos, slideshow)
+        # If we exhausted all H slides then try a V combo
+        current_slide = match_v_combo(current_slide, slideshow, v_photos)
+
+
+def match_h(current_slide, h_photos, slideshow):
+    for photo in h_photos:
+        trial_slide = Slide(photo)
+        interest_factor = min(get_interest_factors(current_slide, trial_slide))
+
+        if interest_factor == 1:
+            slideshow.append(trial_slide)
+            h_photos.remove(photo)
+            current_slide = slideshow[-1]
+            break
+    return current_slide
+
+
+def match_v_combo(current_slide, slideshow, v_photos):
+    for photo1, photo2 in itertools.combinations(v_photos, 2):
+        trial_slide = Slide(photo1, photo2)
+        interest_factor = min(get_interest_factors(current_slide, trial_slide))
+
+        if interest_factor == 1:
+            slideshow.append(trial_slide)
+            v_photos.remove(photo1)
+            v_photos.remove(photo2)
+            current_slide = slideshow[-1]
+            break
+    return current_slide
 
 
 def get_collection_type(v_photos, h_photos):

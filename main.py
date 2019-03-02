@@ -12,7 +12,7 @@ problems = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
 def main():
     # Create the slideshow
-    photos = read_photo_collection(files[problems.get('b')])
+    photos = read_photo_collection(files[problems.get('c')])
 
     # Sort photos
     slideshow = create_optimal_slideshow(photos)
