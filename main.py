@@ -1,6 +1,6 @@
 import glob
 
-from utils.file_handler import get_photo_collection
+from utils.file_handler import read_photo_collection
 from utils.create_slideshow import create_optimal_slideshow
 from utils.scoring_functions import get_slides_score
 
@@ -12,7 +12,7 @@ problems = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
 
 def main():
     # Create the slideshow
-    photos = get_photo_collection(files[problems.get('b')])
+    photos = read_photo_collection(files[problems.get('b')])
 
     # Sort photos
     slideshow = create_optimal_slideshow(photos)

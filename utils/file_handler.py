@@ -1,7 +1,7 @@
 from slide_objects import Photo
 
 
-def get_photo_collection(filename):
+def read_photo_collection(filename):
     """
     Read in a collection of photos.
 
@@ -24,7 +24,7 @@ def get_photo_collection(filename):
     return photo_collection
 
 
-def write_output(filename, slides):
+def write_slideshow(filename, slides):
     """
     Write a collection of slides to a file.
 
